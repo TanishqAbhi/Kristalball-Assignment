@@ -1,3 +1,4 @@
+
 import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
@@ -18,10 +19,23 @@ app.use(cors());
 app.use(express.json());
 app.use(requestLogger);
 
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', service: 'Military Asset Management API' });
+// Root route
+app.get('/', (req, res) => {
+  res.status(200).json({
+    message: 'Kristallball Military Asset Management API is running successfully!',
+    status: 'OK'
+  });
 });
 
+// Health check
+app.get('/api/health', (req, res) => {
+  res.json({
+    status: 'ok',
+    service: 'Military Asset Management API'
+  });
+});
+
+// API routes
 app.use('/api/auth', authRoutes);
 app.use('/api/assets', assetRoutes);
 app.use('/api/purchases', purchaseRoutes);
